@@ -1,0 +1,39 @@
+server:
+  port: 8001
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USER_SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**
+        - id: DRIVER_SERVICE
+          uri: lb://DRIVER-SERVICE
+          predicates:
+            - Path=/driver/**
+        - id: STAFF_SERVICE
+          uri: lb://STAFF-SERVICE
+          predicates:
+            - Path=/staff/**
+#        - id: FIREBASE_SERVICE
+#          uri: lb://FIREBASE-SERVICE
+#          predicates:
+#            - Path=/firebase/**
+        - id: OTP_SERVICE
+          uri: lb://OTP-SERVICE
+          predicates:
+            - Path=/otp/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
